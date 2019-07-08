@@ -89,7 +89,7 @@ class AsyncBufferedConsumerTestCase(unittest.TestCase):
         sync_flush.side_effect = side_effect
 
         self.send_event()
-        self.consumer.flush(async=False)
+        self.consumer.flush(asynchronous=False)
 
     @patch.object(AsyncBufferedConsumer, '_sync_flush')
     def test_flushes_after_first_event_if_first_flush_true(self, sync_flush):
@@ -148,7 +148,7 @@ class AsyncBufferedConsumerTestCase(unittest.TestCase):
 
         self.wait_for_threads()
 
-        send_patch.assert_called_once_with(self.ENDPOINT, '[{"test": true}]')
+        send_patch.assert_called_once_with(self.ENDPOINT, '[{"test": true}]', None)
         self.assertEqual(self.consumer._async_buffers[self.ENDPOINT], [self.JSON])
 
     def test_raises_exception_with_bad_endpoint(self):
